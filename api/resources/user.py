@@ -32,7 +32,6 @@ class User(Resource):
             return user.json()
         return {'message':'user not found'}, 404
 
-    @jwt_required
     def post(self):
         data = User.parser.parse_args()
         user = None
