@@ -1,11 +1,11 @@
 # flask-social-login
 
-An simple example on how to implement authentication via external providers and reconcile it with interal user management.
+A simple example on how to reconcile authentication via external providers with interal user management.
 
-The example contains two components:
+The example contains:
 
-1. Web app built in React
-2. Backend Web API - REST API built with Flask
+1. Frontend - React Web app
+2. Backend - Flask REST API
 
 =========================================================
 
