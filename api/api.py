@@ -5,7 +5,7 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 
 from configuration.config import app_config
-from resources.routes import initialize_routes
+from configuration.routes import initialize_routes
 from database.db import db
 
 app = Flask(__name__)
