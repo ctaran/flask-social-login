@@ -1,10 +1,14 @@
+import requests
 from models.user import UserModel
 
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
 from flask import jsonify, request
 from flask_jwt_extended import create_access_token
 
-class Security(Resource):
+from google.oauth2 import id_token
+from google.auth.transport import requests as grequests
+
+class Login(Resource):
 
     def post(self):
         if not request.is_json:
@@ -29,3 +33,41 @@ class Security(Resource):
                 })
         else:
             return {"msg": "Bad username or password"}, 401
+
+class LoginExternal(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('access_token', 
+        type=str,
+        required=True,
+        help="Access Token field cannot be left blank!"
+    )
+
+    def post(self):
+        data = LoginExternal.parser.parse_args()
+
+        CLIENT_ID = "133413789921-krktqeelao35acttdqqd0gp0sp6q56kp.apps.googleusercontent.com"
+        idinfo = id_token.verify_oauth2_token(data['access_token'], grequests.Request(), CLIENT_ID)
+    
+        # Get User details from Payload
+        user_name = idinfo['given_name'] + " " + idinfo['family_name']
+        user_email = idinfo['email']
+        user = UserModel.find_by_name(user_name)
+
+        if not user:
+            try:
+                user = UserModel(user_name, user_email, 'USER')
+                user.save_to_db()
+            except Exception as err:
+                return {"message": "An error occurred creating the user - {}".format(err)}, 500        
+
+        jwt_token = create_access_token(identity=user.id)
+
+        # return Identity
+        return jsonify({
+                    'access_token': jwt_token,
+                    'id': user.id,
+                    'name': user.name,
+                    'email': user.email,
+                    'role': user.role
+                })
+

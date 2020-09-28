@@ -45,7 +45,7 @@ class User(Resource):
         email = data['email']
         role = data['role']
 
-        user = UserModel(name, password, email, role)
+        user = UserModel(name, email, role, password=password)
 
         try:
             user.save_to_db()
@@ -80,8 +80,8 @@ class User(Resource):
             if data['role']:
                 user.role = data['role']
         else:
-            user = UserModel(**data)
-
+            user = UserModel(data['name'], data['email'], data['role'], password=data['password'])
+            
         try:
             user.save_to_db()
         except:

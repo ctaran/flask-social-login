@@ -11,7 +11,7 @@ class UserModel(db.Model):
     email = db.Column(db.String(80))
     role = db.Column(db.String(30))
 
-    def __init__(self, name, password, email, role):
+    def __init__(self, name, email, role, password=''):
         self.name = name
         self.password = UserModel.generate_hash(password)
         self.email = email
