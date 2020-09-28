@@ -48,10 +48,10 @@ class LoginExternal(Resource):
         CLIENT_ID = "133413789921-krktqeelao35acttdqqd0gp0sp6q56kp.apps.googleusercontent.com"
         idinfo = id_token.verify_oauth2_token(data['access_token'], grequests.Request(), CLIENT_ID)
     
-        # Get User details from Payload
+        # Get User details from Google specific Payload
         user_name = idinfo['given_name'] + " " + idinfo['family_name']
         user_email = idinfo['email']
-        user = UserModel.find_by_name(user_name)
+        user = UserModel.find_by_email(user_email)
 
         if not user:
             try:
