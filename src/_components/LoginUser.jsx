@@ -2,9 +2,12 @@ import React from 'react'
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Message } from 'semantic-ui-react';
+import GoogleLoginButton from '../_elements/GoogleLoginButton';
 
 class LoginUser extends React.Component {
     render() {
+        const googleClientID = "133413789921-krktqeelao35acttdqqd0gp0sp6q56kp.apps.googleusercontent.com";
+        
         return (
             <>
                 <div className="col"></div>
@@ -60,6 +63,7 @@ class LoginUser extends React.Component {
                             </Form>
                         )}
                     </Formik>
+                    <GoogleLoginButton clientID={googleClientID} onSuccess={this.props.onGoogleLoginSuccess} />
                     <Message>
                         Don't have an account yet? <a href='/register'>Sign Up</a>
                     </Message>

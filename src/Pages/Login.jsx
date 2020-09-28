@@ -12,6 +12,7 @@ class Login extends React.Component {
         }
 
         this.handleLogin = this.handleLogin.bind(this);
+        this.handleExternalLogin = this.handleExternalLogin.bind(this);
     }
 
     handleLogin(username, password) {
@@ -24,9 +25,22 @@ class Login extends React.Component {
             );
     }
 
+    handleExternalLogin(access_token) {
+        authenticationService.loginExternal(access_token)
+            .then(
+                user => {
+                    const { from } = this.props.location.state || { from: { pathname: "/" } };
+                    this.props.history.push(from);
+                },
+                error => {
+                    alert('Login with GOOGLE failed - ' + error);
+                }
+            );
+    }
+
     render() {
         return (
-            <LoginUser loginClick={this.handleLogin}/>
+            <LoginUser loginClick={this.handleLogin} onGoogleLoginSuccess={this.handleExternalLogin}/>
         )
     }
 }

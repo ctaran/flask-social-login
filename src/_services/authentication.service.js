@@ -5,6 +5,7 @@ const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('
 
 export const authenticationService = {
     login,
+    loginExternal,
     cacheUser,
     logout,
     currentUser: currentUserSubject.asObservable(),
@@ -21,6 +22,19 @@ async function login(username, password) {
     };
 
     const response = await fetch(`/api/login`, requestOptions);
+    const user = await handleResponse(response);
+    cacheUser(user);
+    return user;
+}
+
+async function loginExternal(access_token) {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ access_token })
+    };
+
+    const response = await fetch(`/api/external/login`, requestOptions);
     const user = await handleResponse(response);
     cacheUser(user);
     return user;
