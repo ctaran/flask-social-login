@@ -15,9 +15,9 @@ class User(Resource):
         help="Password field cannot be left blank!"
     )
     parser.add_argument('email', 
-    type=str,
-    required=True,
-    help="Email field cannot be left blank!"
+        type=str,
+        required=True,
+        help="Email field cannot be left blank!"
     )
     parser.add_argument('role', 
         type=str,
@@ -39,7 +39,7 @@ class User(Resource):
         name = data['name']
 
         if UserModel.find_by_name(name):
-            return {"message": "User {} already exists".format(name)}, 400
+            return {"message": "Cannot create user - name already exists"}, 400
 
         password = data['password']
         email = data['email']
