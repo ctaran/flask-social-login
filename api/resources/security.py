@@ -53,20 +53,20 @@ class LoginExternal(Resource):
 
         origin = data['origin']
         # Verify token
-        if origin != UserOrigin.GOOGLE:
+        if origin != UserOrigin.GOOGLE.name:
             return {'message':'Origin {} unrecognized'.format(origin)}, 404
     
         # Get User details from the Google specific Payload
         CLIENT_ID = "133413789921-krktqeelao35acttdqqd0gp0sp6q56kp.apps.googleusercontent.com"
         idinfo = id_token.verify_oauth2_token(data['access_token'], grequests.Request(), CLIENT_ID)
-        
+
         name = idinfo['given_name'] + " " + idinfo['family_name']
         email = idinfo['email']
         user = UserModel.find_by_email(email)
 
         if not user:
             try:
-                user = UserModel(name, email, UserRole.USER, origin )
+                user = UserModel(name, email, UserRole.USER.name, origin )
                 user.save_to_db()
             except Exception as err:
                 return {"message": "An error occurred creating the user - {}".format(err)}, 500        

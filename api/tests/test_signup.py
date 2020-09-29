@@ -11,8 +11,8 @@ class TestSignUp(BaseCase):
             "name":"test",
             "password":"test",
             "email":"test@gmail.com",
-            "role": UserRole.ADMIN,
-            "origin": UserOrigin.INTERNAL
+            "role": UserRole.ADMIN.name,
+            "origin": UserOrigin.INTERNAL.name
         }
 
         res = self.client.post('/api/user/new', data=user_data)
@@ -27,8 +27,8 @@ class TestSignUp(BaseCase):
         user_data = {
             "password":"test",
             "email":"test@gmail.com",
-            "role": UserRole.ADMIN,
-            "origin": UserOrigin.INTERNAL
+            "role": UserRole.ADMIN.name,
+            "origin": UserOrigin.INTERNAL.name
         }
 
         res = self.client.post('/api/user/new', data=user_data)
@@ -42,8 +42,8 @@ class TestSignUp(BaseCase):
         user_data = {
             "name":"test",
             "email":"test@gmail.com",
-            "role": UserRole.ADMIN,
-            "origin": UserOrigin.INTERNAL
+            "role": UserRole.ADMIN.name,
+            "origin": UserOrigin.INTERNAL.name
         }
 
         res = self.client.post('/api/user/new', data=user_data)
@@ -57,8 +57,8 @@ class TestSignUp(BaseCase):
         user_data = {
             "name":"test",
             "password":"test",
-            "role": UserRole.ADMIN,
-            "origin": UserOrigin.INTERNAL
+            "role": UserRole.ADMIN.name,
+            "origin": UserOrigin.INTERNAL.name
         }
 
         res = self.client.post('/api/user/new', data=user_data)
@@ -73,8 +73,8 @@ class TestSignUp(BaseCase):
             "name":"test",
             "password":"test",
             "email":"test@gmail.com",
-            "role": UserRole.ADMIN,
-            "origin": UserOrigin.INTERNAL
+            "role": UserRole.ADMIN.name,
+            "origin": UserOrigin.INTERNAL.name
         }
 
         res = self.client.post('/api/user/new', data=user_data)

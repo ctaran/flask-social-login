@@ -10,8 +10,8 @@ class TestLogin(BaseCase):
             "name":"test",
             "password":"test",
             "email":"test@gmail.com",
-            "role": UserRole.USER,
-            "origin": UserOrigin.INTERNAL
+            "role": UserRole.USER.name,
+            "origin": UserOrigin.INTERNAL.name
         }
         user_creds = {
             "username":"test",
@@ -36,8 +36,8 @@ class TestLogin(BaseCase):
             "name":"test",
             "password":"test",
             "email":"test@gmail.com",
-            "role": UserRole.USER,
-            "origin": UserOrigin.INTERNAL
+            "role": UserRole.USER.name,
+            "origin": UserOrigin.INTERNAL.name
         }
         user_creds = {
             "username":"wrong_user",
@@ -61,8 +61,8 @@ class TestLogin(BaseCase):
             "name":"test",
             "password":"test",
             "email":"test@gmail.com",
-            "role": UserRole.USER,
-            "origin": UserOrigin.INTERNAL
+            "role": UserRole.USER.name,
+            "origin": UserOrigin.INTERNAL.name
         }
         user_creds = {
             "username":"test",
