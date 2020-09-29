@@ -1,5 +1,14 @@
+from enum import Enum
 from database.db import db
 from passlib.hash import pbkdf2_sha256 as sha256
+
+class UserRole(Enum):
+    USER = 1
+    ADMIN = 2
+
+class UserOrigin(Enum):
+    INTERNAL = 1
+    GOOGLE = 2
 
 class UserModel(db.Model):
 
@@ -10,15 +19,17 @@ class UserModel(db.Model):
     password = db.Column(db.String(80))
     email = db.Column(db.String(80))
     role = db.Column(db.String(30))
+    origin = db.Column(db.String(20))
 
-    def __init__(self, name, email, role, password=''):
+    def __init__(self, name, email, role, origin, password=''):
         self.name = name
         self.password = UserModel.generate_hash(password)
         self.email = email
         self.role = role
+        self.origin = origin
         
     def json(self):
-        return {'id':self.id, 'name': self.name, 'email': self.email, 'role': self.role }
+        return {'id':self.id, 'name': self.name, 'email': self.email, 'role': self.role, 'origin': self.origin }
 
     @classmethod
     def find_by_name(cls, name):

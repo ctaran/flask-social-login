@@ -1,5 +1,5 @@
 import requests
-from models.user import UserModel
+from models.user import UserModel, UserOrigin, UserRole
 
 from flask_restful import Resource, reqparse
 from flask import jsonify, request
@@ -29,7 +29,8 @@ class Login(Resource):
                     'id': user.id,
                     'name': user.name,
                     'email': user.email,
-                    'role': user.role
+                    'role': user.role,
+                    'origin': user.origin
                 })
         else:
             return {"msg": "Bad username or password"}, 401
@@ -41,33 +42,44 @@ class LoginExternal(Resource):
         required=True,
         help="Access Token field cannot be left blank!"
     )
+    parser.add_argument('origin', 
+        type=str,
+        required=True,
+        help="Origin field cannot be left blank!"
+    )
 
     def post(self):
         data = LoginExternal.parser.parse_args()
 
+        origin = data['origin']
+        # Verify token
+        if origin != UserOrigin.GOOGLE:
+            return {'message':'Origin {} unrecognized'.format(origin)}, 404
+    
+        # Get User details from the Google specific Payload
         CLIENT_ID = "133413789921-krktqeelao35acttdqqd0gp0sp6q56kp.apps.googleusercontent.com"
         idinfo = id_token.verify_oauth2_token(data['access_token'], grequests.Request(), CLIENT_ID)
-    
-        # Get User details from Google specific Payload
-        user_name = idinfo['given_name'] + " " + idinfo['family_name']
-        user_email = idinfo['email']
-        user = UserModel.find_by_email(user_email)
+        
+        name = idinfo['given_name'] + " " + idinfo['family_name']
+        email = idinfo['email']
+        user = UserModel.find_by_email(email)
 
         if not user:
             try:
-                user = UserModel(user_name, user_email, 'USER')
+                user = UserModel(name, email, UserRole.USER, origin )
                 user.save_to_db()
             except Exception as err:
                 return {"message": "An error occurred creating the user - {}".format(err)}, 500        
 
-        jwt_token = create_access_token(identity=user.id)
+        access_token = create_access_token(identity=user.id)
 
         # return Identity
         return jsonify({
-                    'access_token': jwt_token,
+                    'access_token': access_token,
                     'id': user.id,
                     'name': user.name,
                     'email': user.email,
-                    'role': user.role
+                    'role': user.role,
+                    'origin': user.origin
                 })
 

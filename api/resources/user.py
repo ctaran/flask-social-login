@@ -24,6 +24,11 @@ class User(Resource):
         required=True,
         help="Role field cannot be left blank!"
     )
+    parser.add_argument('origin', 
+        type=str,
+        required=True,
+        help="Origin field cannot be left blank!"
+    )
 
     @jwt_required   
     def get(self, name):
@@ -44,8 +49,9 @@ class User(Resource):
         password = data['password']
         email = data['email']
         role = data['role']
+        origin = data['origin']
 
-        user = UserModel(name, email, role, password=password)
+        user = UserModel(name, email, role, origin, password=password)
 
         try:
             user.save_to_db()
@@ -74,13 +80,12 @@ class User(Resource):
 
         if user:
             user.name = data['name']
-            if data['password']:
-                user.password = UserModel.generate_hash(data['password'])
+            user.password = UserModel.generate_hash(data['password'])
             user.email = data['email']
-            if data['role']:
-                user.role = data['role']
+            user.role = data['role']
+            user.origin = data['origin']
         else:
-            user = UserModel(data['name'], data['email'], data['role'], password=data['password'])
+            user = UserModel(data['name'], data['email'], data['role'], data['origin'], password=data['password'])
             
         try:
             user.save_to_db()

@@ -1,3 +1,4 @@
+from models.user import UserOrigin, UserRole
 from flask import json
 
 from tests.basecase import BaseCase
@@ -10,7 +11,8 @@ class TestSignUp(BaseCase):
             "name":"test",
             "password":"test",
             "email":"test@gmail.com",
-            "role": "ADMIN"
+            "role": UserRole.ADMIN,
+            "origin": UserOrigin.INTERNAL
         }
 
         res = self.client.post('/api/user/new', data=user_data)
@@ -25,7 +27,8 @@ class TestSignUp(BaseCase):
         user_data = {
             "password":"test",
             "email":"test@gmail.com",
-            "role": "ADMIN"
+            "role": UserRole.ADMIN,
+            "origin": UserOrigin.INTERNAL
         }
 
         res = self.client.post('/api/user/new', data=user_data)
@@ -39,8 +42,8 @@ class TestSignUp(BaseCase):
         user_data = {
             "name":"test",
             "email":"test@gmail.com",
-            "role": "ADMIN",
-            "origin":"INTERNAL"
+            "role": UserRole.ADMIN,
+            "origin": UserOrigin.INTERNAL
         }
 
         res = self.client.post('/api/user/new', data=user_data)
@@ -54,7 +57,8 @@ class TestSignUp(BaseCase):
         user_data = {
             "name":"test",
             "password":"test",
-            "role": "ADMIN"
+            "role": UserRole.ADMIN,
+            "origin": UserOrigin.INTERNAL
         }
 
         res = self.client.post('/api/user/new', data=user_data)
@@ -69,7 +73,8 @@ class TestSignUp(BaseCase):
             "name":"test",
             "password":"test",
             "email":"test@gmail.com",
-            "role": "ADMIN"
+            "role": UserRole.ADMIN,
+            "origin": UserOrigin.INTERNAL
         }
 
         res = self.client.post('/api/user/new', data=user_data)

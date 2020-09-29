@@ -1,3 +1,4 @@
+from models.user import UserOrigin, UserRole
 from flask import json
 from tests.basecase import BaseCase
 
@@ -9,7 +10,8 @@ class TestLogin(BaseCase):
             "name":"test",
             "password":"test",
             "email":"test@gmail.com",
-            "role": "USER"
+            "role": UserRole.USER,
+            "origin": UserOrigin.INTERNAL
         }
         user_creds = {
             "username":"test",
@@ -34,8 +36,8 @@ class TestLogin(BaseCase):
             "name":"test",
             "password":"test",
             "email":"test@gmail.com",
-            "role": "USER",
-            "origin":"INTERNAL"
+            "role": UserRole.USER,
+            "origin": UserOrigin.INTERNAL
         }
         user_creds = {
             "username":"wrong_user",
@@ -59,8 +61,8 @@ class TestLogin(BaseCase):
             "name":"test",
             "password":"test",
             "email":"test@gmail.com",
-            "role": "USER",
-            "origin":"INTERNAL"
+            "role": UserRole.USER,
+            "origin": UserOrigin.INTERNAL
         }
         user_creds = {
             "username":"test",
