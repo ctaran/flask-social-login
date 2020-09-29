@@ -5,6 +5,11 @@ export const userRoles = {
     USER: 'USER'
 };
 
+export const userOrigins = {
+    INTERNAL: 'INTERNAL',
+    GOOGLE: 'GOOGLE'
+};
+
 export const userService = {
     getAll,
     getByName,
@@ -27,21 +32,23 @@ async function getByName(name) {
 
 async function registerUser(name, password, email) {
     const role = userRoles.USER;
+    const origin = userOrigins.INTERNAL;
+
     const requestOptions = {
         method: 'POST', 
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, password, email, role })
+        body: JSON.stringify({ name, password, email, role, origin })
     }
 
     const response = await fetch(`/api/user/new`, requestOptions);
     return handleResponse(response);
 }
 
-async function updateByName(previous_name, name, password, email, role) {
+async function updateByName(previous_name, name, password, email, role, origin) {
     const requestOptions = {
         method: 'PUT', 
         headers: Object.assign({}, authHeader(),  { "Content-Type": "application/json" }),
-        body: JSON.stringify({ name, password, email, role }),
+        body: JSON.stringify({ name, password, email, role, origin }),
     }
 
     const response = await fetch(`/api/user/${previous_name}`, requestOptions);

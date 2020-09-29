@@ -1,10 +1,11 @@
 import React from 'react';
 import { GoogleLogin } from 'react-google-login';
+import { userOrigins } from '../_services';
 
 function GoogleLoginButton(props) {
 
     const onSuccess = (response) => {
-        props.onSuccess(response.tokenId);
+        props.onSuccess(response.tokenId, userOrigins.GOOGLE);
     };
 
     const onFailure = (res) => {

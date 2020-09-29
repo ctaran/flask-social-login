@@ -25,15 +25,15 @@ class Login extends React.Component {
             );
     }
 
-    handleExternalLogin(access_token) {
-        authenticationService.loginExternal(access_token)
+    handleExternalLogin(access_token, origin) {
+        authenticationService.loginExternal(access_token, origin)
             .then(
                 user => {
                     const { from } = this.props.location.state || { from: { pathname: "/" } };
                     this.props.history.push(from);
                 },
                 error => {
-                    alert('Login with GOOGLE failed - ' + error);
+                    alert('Login with ' + origin + ' failed - ' + error);
                 }
             );
     }

@@ -27,11 +27,11 @@ async function login(username, password) {
     return user;
 }
 
-async function loginExternal(access_token) {
+async function loginExternal(access_token, origin) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ access_token })
+        body: JSON.stringify({ access_token, origin })
     };
 
     const response = await fetch(`/api/external/login`, requestOptions);
