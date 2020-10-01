@@ -1,6 +1,6 @@
 import React from 'react';
 import LoginUser from '../_components/LoginUser';
-import { authenticationService } from '../_services';
+import { authenticationService, userRoles } from '../_services';
 
 class Login extends React.Component {
     constructor(props) {
@@ -19,8 +19,14 @@ class Login extends React.Component {
         authenticationService.login(username, password)
             .then(
                 user => {
-                    const { from } = this.props.location.state || { from: { pathname: "/" } };
-                    this.props.history.push(from);
+                    if (user.role == userRoles.ADMIN) {
+                        const { from } = { from: { pathname: "/admin" } };
+                        this.props.history.push(from);
+                    }
+                    else {
+                        const { from } = this.props.location.state || { from: { pathname: "/" } };
+                        this.props.history.push(from);
+                    }
                 }
             );
     }
@@ -29,8 +35,14 @@ class Login extends React.Component {
         authenticationService.loginExternal(access_token, origin)
             .then(
                 user => {
-                    const { from } = this.props.location.state || { from: { pathname: "/" } };
-                    this.props.history.push(from);
+                    if (user.role == userRoles.ADMIN) {
+                        const { from } = { from: { pathname: "/admin" } };
+                        this.props.history.push(from);
+                    }
+                    else {
+                        const { from } = this.props.location.state || { from: { pathname: "/" } };
+                        this.props.history.push(from);
+                    }
                 },
                 error => {
                     alert('Login with ' + origin + ' failed - ' + error);
