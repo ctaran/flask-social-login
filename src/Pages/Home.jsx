@@ -5,13 +5,12 @@ import { authenticationService } from '../_services';
 class Home extends Component {
     render() {
         const user = authenticationService && authenticationService.currentUserValue;
-        const imagePath = `../_images/user${user.id}.png`;
 
         return (
             user &&
             <Container>
                 <Card>
-                    <Image src={imagePath} wrapped ui={false} />
+                    <Image src={require(`../_images/user${user.id}.png`)} wrapped ui={false} />
                     <Card.Content>
                     <Card.Header>{user.name}</Card.Header>
                     <Card.Meta>

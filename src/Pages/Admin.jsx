@@ -10,7 +10,7 @@ class Admin extends Component {
             user &&
             <Container>
                 <Card>
-                    <Image src={`../_images/user${user.id}.png`} wrapped ui={false} />
+                    <Image src={require(`../_images/user${user.id}.png`)} wrapped ui={false} />
                     <Card.Content>
                     <Card.Header>{user.name}</Card.Header>
                     <Card.Meta>
