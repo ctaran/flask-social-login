@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render initial layout 1`] = `
+Array [
+  <Card>
+    <Image
+      as="img"
+      src="user1.png"
+      ui={false}
+      wrapped={true}
+    />
+    <CardContent>
+      <CardHeader>
+        admin
+      </CardHeader>
+      <CardMeta>
+        <span
+          className="date"
+        >
+          admin@gmail.com
+        </span>
+      </CardMeta>
+      <CardDescription>
+        admin
+         has the 
+        ADMIN
+         role
+      </CardDescription>
+    </CardContent>
+    <CardContent
+      extra={true}
+    >
+      <a>
+        <Icon
+          as="i"
+          name="user"
+        />
+        admin
+         is coming from 
+        INTERNAL
+      </a>
+    </CardContent>
+  </Card>,
+]
+`;
